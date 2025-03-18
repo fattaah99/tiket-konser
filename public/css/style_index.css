@@ -79,7 +79,7 @@ body {
 .btn {
     display: inline-block;
     padding: 8px 15px;
-    background-color: #00bcd4;
+    /* background-color: #00bcd4; */
     color: white;
     text-decoration: none;
     border-radius: 5px;
@@ -149,4 +149,8 @@ body {
     transform: scale(1.5);
     filter: blur(0);
     z-index: 10;
+}
+
+.dropdown-menu {
+    z-index: 1050; /* Lebih tinggi dari navbar */
 }

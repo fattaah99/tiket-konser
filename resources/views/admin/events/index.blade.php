@@ -37,6 +37,7 @@
                                         <th>Nama Event</th>
                                         <th>Tanggal</th>
                                         <th>Lokasi</th>
+                                        <th>Deskripsi</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -48,6 +49,7 @@
                                         <td>{{ $event->title }}</td>
                                         <td>{{ $event->event_date }}</td>
                                         <td>{{ $event->location }}</td>
+                                        <td>{{ $event->description }}</td>
                                         <td>
                                             <button class="btn btn-warning btn-sm"
                                                 onclick="openEditModal({{ json_encode($event) }})">Edit</button>

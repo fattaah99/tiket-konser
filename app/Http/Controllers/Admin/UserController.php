@@ -60,7 +60,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6',
+            'password' => 'required',
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string|max:255',
         ]);

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,20 +10,24 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'total_price', 'status',
+        'ticket_id',
+        'ticket_class',
+        'buyer_name',
+        'email',
+        'quantity',
+        'total_price',
+        'status',
     ];
 
-    protected $casts = [
-        'status' => 'string',
-    ];
-
-    public function user()
+    /**
+     * Relasi ke model Ticket (One-to-Many, satu tiket bisa memiliki banyak order).
+     */
+    public function ticket()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Ticket::class);
     }
-
-    public function tickets()
+    public function orders()
     {
-        return $this->hasMany(Ticket::class);
+        return $this->hasMany(Order::class);
     }
 }

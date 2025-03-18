@@ -7,12 +7,26 @@ use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\EventGalleryController;
 use App\Http\Controllers\Admin\TicketsController;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\UserAuthController;
+use App\Http\Controllers\OrderController;
 
 Route::get('/tickets', [PublicController::class, 'tickets']);
+Route::get('/ticket/{id}', [PublicController::class, 'show'])->name('public.ticket-detail');
 Route::get('/events', [PublicController::class, 'events']);
 Route::get('/event-gallery', [PublicController::class, 'eventGallery']);
-Route::get('/', [PublicController::class, 'index']);
+Route::get('/', [PublicController::class, 'index'])->name('home');
 Route::get('/events/{id}', [PublicController::class, 'show'])->name('event.detail');
+Route::get('/login', [UserAuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [UserAuthController::class, 'login'])->name('login.post');
+Route::post('/logout', [UserAuthController::class, 'logout'])->name('logout');
+
+
+Route::post('/order', [OrderController::class, 'store'])->name('order.store');
+
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/ticket/{id}', [OrderController::class, 'show']);
+//     Route::post('/order', [OrderController::class, 'store']);
+// });
 
 
 
