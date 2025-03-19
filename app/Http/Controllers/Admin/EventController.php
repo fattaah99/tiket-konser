@@ -53,7 +53,7 @@ class EventController extends Controller
     public function update(Request $request, $id)
     {
         $event = Event::findOrFail($id);
-        dd($request->all());
+        // dd($request->all());
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
