@@ -50,8 +50,9 @@
     document.getElementById('pay-button').onclick = function() {
         window.snap.pay("{{ $snapToken }}", {
             onSuccess: function(result) {
-                alert("Pembayaran berhasil!");
-                window.location.href = "/order-success";
+                // alert("Pembayaran berhasil!");
+                window.location.href = "{{ route('order.success', ['id' => $order->id]) }}";
+
             },
             onPending: function(result) {
                 alert("Menunggu pembayaran!");

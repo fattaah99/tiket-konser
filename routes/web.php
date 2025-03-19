@@ -9,19 +9,31 @@ use App\Http\Controllers\Admin\TicketsController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\TicketController;
+use App\Http\Controllers\MidtransController;
 
 Route::get('/tickets', [PublicController::class, 'tickets']);
 Route::get('/ticket/{id}', [PublicController::class, 'show'])->name('public.ticket-detail');
 Route::get('/events', [PublicController::class, 'events']);
 Route::get('/event-gallery', [PublicController::class, 'eventGallery']);
 Route::get('/', [PublicController::class, 'index'])->name('home');
+Route::get('/all-tiket', [PublicController::class, 'allTiket'])->name('all-tiket');
 Route::get('/events/{id}', [PublicController::class, 'show'])->name('event.detail');
 Route::get('/login', [UserAuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [UserAuthController::class, 'login'])->name('login.post');
 Route::post('/logout', [UserAuthController::class, 'logout'])->name('logout');
 
+// Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show')->middleware('auth');
+Route::get('/ticket/print/{id}', [TicketController::class, 'printTicket'])->name('ticket.print');
+
+Route::get('/my-orders', [OrderController::class, 'myOrders'])->name('orders.myOrders')->middleware('auth');
 
 Route::post('/order', [OrderController::class, 'store'])->name('order.store');
+Route::get('/order/success/{id}', [OrderController::class, 'success'])->name('order.success');
+
+
+// Route::get('/midtrans/check-status/{orderId}', [MidtransController::class, 'checkPaymentStatus']);
+
 
 // Route::middleware(['auth'])->group(function () {
 //     Route::get('/ticket/{id}', [OrderController::class, 'show']);

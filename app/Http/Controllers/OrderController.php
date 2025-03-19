@@ -11,11 +11,11 @@ use Illuminate\Support\Facades\DB;
 class OrderController extends Controller
 {
     // Menampilkan detail tiket tertentu
-    public function show($id)
-    {
-        $ticket = Ticket::findOrFail($id);
-        return response()->json($ticket);
-    }
+    // public function show($id)
+    // {
+    //     $ticket = Ticket::findOrFail($id);
+    //     return response()->json($ticket);
+    // }
 
     public function store(Request $request)
 {
@@ -77,6 +77,74 @@ class OrderController extends Controller
     return view('order.payment', compact('snapToken', 'order'));
 
 }
+
+
+public function success($id)
+{
+    // Cari order berdasarkan ID
+    $order = Order::find($id);
+
+    // Jika order tidak ditemukan, tampilkan error
+    if (!$order) {
+        return redirect()->route('home')->with('error', 'Order tidak ditemukan.');
+    }
+
+    // Perbarui status order menjadi 'success'
+    $order->status = 'paid'; // Pastikan dalam tanda kutip
+    $order->updated_at = now(); // Tambahkan update timestamp (opsional)
+    $order->save();
+
+    // Redirect ke halaman sukses dengan pesan sukses
+    return view('order.order-success');
+}
+
+public function show($id)
+    {
+        // Pastikan user sudah login
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Silakan login untuk melihat pesanan Anda.');
+        }
+
+        // Ambil order berdasarkan ID dan user yang login
+        $order = Order::where('id', $id)->where('user_id', Auth::id())->first();
+
+        // Jika order tidak ditemukan atau milik user lain
+        if (!$order) {
+            return redirect()->route('home')->with('error', 'Pesanan tidak ditemukan atau bukan milik Anda.');
+        }
+
+        // Kirim data ke view
+        return view('orders.show', compact('order'));
+    }
+
+    public function index()
+    {
+        // Pastikan user sudah login
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Silakan login untuk melihat pesanan Anda.');
+        }
+
+        // Ambil semua order berdasarkan user yang login
+        $orders = Order::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
+
+        // Kirim data ke view
+        return view('orders.index', compact('orders'));
+    }
+
+    public function myOrders()
+    {
+        $userEmail = Auth::user()->email; // Ambil email dari user yang login
+    
+        $orders = Order::where('email', $userEmail)
+                    ->with(['ticket.event']) // Muat relasi ticket dan event
+                    ->get();
+    
+        return view('order.index', compact('orders'));
+    }
+    
+
+
+
 
 
     // Membuat order baru

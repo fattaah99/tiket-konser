@@ -124,8 +124,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Event untuk tombol tambah dan kurang
     btnPlus.addEventListener("click", function () {
-        quantityInput.value = Math.max(1, parseInt(quantityInput.value) + 1);
-        updateTotalPrice();
+        let currentValue = parseInt(quantityInput.value);
+        if (currentValue < 3) {
+            // Batasi maksimum ke 3
+            quantityInput.value = currentValue + 1;
+            updateTotalPrice();
+        }
     });
 
     btnMinus.addEventListener("click", function () {

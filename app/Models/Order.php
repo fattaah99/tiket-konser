@@ -24,10 +24,12 @@ class Order extends Model
      */
     public function ticket()
     {
-        return $this->belongsTo(Ticket::class);
+        return $this->belongsTo(Ticket::class, 'ticket_id'); // Pastikan foreign key benar
     }
     public function orders()
     {
         return $this->hasMany(Order::class);
     }
+
+    
 }

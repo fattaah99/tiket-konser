@@ -180,9 +180,18 @@ return [
     | the aliases are "lazy" loaded so they don't hinder performance.
     |
     */
+// 'aliases' => [
+//     'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+// ],
 
-    'aliases' => Facade::defaultAliases()->merge([
-        // 'Example' => App\Facades\Example::class,
-    ])->toArray(),
+'aliases' => Facade::defaultAliases()->merge([
+    'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+])->toArray(),
+
+
+
+    // 'aliases' => Facade::defaultAliases()->merge([
+    //     // 'Example' => App\Facades\Example::class,
+    // ])->toArray(),
 
 ];

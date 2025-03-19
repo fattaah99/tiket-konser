@@ -830,3 +830,17 @@
     exports.Treeview = Treeview;
 });
 //# sourceMappingURL=adminlte.js.map
+
+document.querySelectorAll(".gallery img").forEach((img) => {
+    img.addEventListener("click", function () {
+        document
+            .querySelectorAll(".gallery img")
+            .forEach((img) => img.classList.remove("active"));
+        this.classList.add("active");
+        this.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+            inline: "center",
+        });
+    });
+});

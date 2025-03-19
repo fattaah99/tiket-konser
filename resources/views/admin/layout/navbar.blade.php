@@ -96,6 +96,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('admin.events.index') }}"
+                                class="nav-link {{ set_active('admin.events.index') }}">
+                                <i class="nav-icon bi bi-tree-fill"></i>
+                                <p>Data Event</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('admin.users.index') }}"
                                 class="nav-link {{ set_active('admin.users.index') }}">
                                 <i class="nav-icon bi bi-people-fill"></i>
