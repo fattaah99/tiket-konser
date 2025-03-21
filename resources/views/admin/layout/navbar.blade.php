@@ -25,35 +25,37 @@
                     <!--end::Fullscreen Toggle-->
                     <!--begin::User Menu Dropdown-->
                     <li class="nav-item dropdown user-menu">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img src="{{ asset('assets/images/user2-160x160.jpg') }}"
-                                class="user-image rounded-circle shadow" alt="User Image" />
-                            <span class="d-none d-md-inline"> {{ Auth::guard('admin')->user()->nama }}</span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                            <!--begin::User Image-->
-                            <li class="user-header text-bg-primary">
-                                <img src="{{ asset('assets/images/user2-160x160.jpg') }}" class="rounded-circle shadow"
-                                    alt="User Image" />
-                                <p>
-                                    {{ Auth::guard('admin')->user()->nama }}
-                                    <small>Member since Nov. 2023</small>
-                                </p>
-                            </li>
-                            <!--end::User Image-->
-                            <!--begin::Menu Footer-->
-                            <li class="user-footer">
-                                <form id="logout-form" action="{{ route('admin.logout') }}" method="POST"
-                                    style="display: none;">
-                                    @csrf
-                                </form>
-                                <a href="#" class="btn btn-default btn-flat float-end"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    Sign out
-                                </a>
-                            </li>
 
-                            <!--end::Menu Footer-->
+                        <ul class="navbar-nav ms-auto align-items-center">
+                            <!-- Fullscreen Toggle -->
+
+                            <!-- User Menu Dropdown -->
+                            @if(Auth::check())
+                            <li class="nav-item dropdown user-menu">
+                                <a href="#" class="nav-link dropdown-toggle d-flex align-items-center"
+                                    data-bs-toggle="dropdown">
+                                    <span
+                                        class="me-2 d-none d-md-inline fw-semibold">{{ Auth::guard('admin')->user()->name }}</span>
+                                    <i class="bi bi-person-circle fs-4"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end shadow-sm">
+                                    <li class="user-footer">
+                                        <form id="logout-form" action="{{ route('admin.logout') }}" method="POST"
+                                            style="display: none;">
+                                            @csrf
+                                        </form>
+                                        <a href="#" class="btn btn-danger btn-sm w-100"
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            Sign out
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            @else
+                            <li class="nav-item">
+                                <a href="{{ route('login') }}" class="btn btn-primary px-4 py-2">Login</a>
+                            </li>
+                            @endif
                         </ul>
                     </li>
                     <!--end::User Menu Dropdown-->
@@ -70,11 +72,10 @@
                 <!--begin::Brand Link-->
                 <a href="../index.html" class="brand-link">
                     <!--begin::Brand Image-->
-                    <img src="../../../dist/assets/img/AdminLTELogo.png" alt="AdminLTE Logo"
-                        class="brand-image opacity-75 shadow" />
+
                     <!--end::Brand Image-->
                     <!--begin::Brand Text-->
-                    <span class="brand-text fw-light">AdminLTE 4</span>
+                    <span class="brand-text fw-light">JCT Store</span>
                     <!--end::Brand Text-->
                 </a>
                 <!--end::Brand Link-->

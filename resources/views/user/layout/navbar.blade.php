@@ -14,59 +14,37 @@
         </ul>
         <!--end::Start Navbar Links-->
         <!--begin::End Navbar Links-->
-        <ul class="navbar-nav ms-auto">
-            <!--begin::Fullscreen Toggle-->
+        <ul class="navbar-nav ms-auto align-items-center">
+            <!-- Fullscreen Toggle -->
             <li class="nav-item">
-                <a class="nav-link" href="#" data-lte-toggle="fullscreen">
-                    <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen"></i>
-                    <i data-lte-icon="minimize" class="bi bi-fullscreen-exit" style="display: none"></i>
+                <a class="nav-link d-flex align-items-center" href="#" data-lte-toggle="fullscreen">
+                    <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen fs-5"></i>
+                    <i data-lte-icon="minimize" class="bi bi-fullscreen-exit fs-5" style="display: none"></i>
                 </a>
             </li>
-            <!--end::Fullscreen Toggle-->
-            <!--begin::User Menu Dropdown-->
+            <!-- User Menu Dropdown -->
             @if(Auth::check())
             <li class="nav-item dropdown user-menu">
-                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-
-                    <span class="d-none d-md-inline"> {{ Auth::user()->name }}</span>
+                <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                    <span class="me-2 d-none d-md-inline fw-semibold">{{ Auth::user()->name }}</span>
+                    <i class="bi bi-person-circle fs-4"></i>
                 </a>
-                <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                    <!--begin::User Image-->
-                    <li class="user-header text-bg-primary">
-                        <img src="../../dist/assets/img/user2-160x160.jpg" class="rounded-circle shadow"
-                            alt="User Image" />
-                        <p>
-                            {{ Auth::user()->name }}
-                        </p>
-                    </li>
-                    <!--end::User Image-->
-                    <!--begin::Menu Body-->
-                    <li class="user-body">
-                        <!--begin::Row-->
-                        <div class="row">
-
-                        </div>
-                        <!--end::Row-->
-                    </li>
-                    <!--end::Menu Body-->
-                    <!--begin::Menu Footer-->
-                    <li class="user-footer">
-
+                <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end shadow-sm">
+                    <li class="dropdown-item text-center">
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
-                            <button type="submit" class="btn btn-danger btn-sm  ">Logout</button>
-
-
+                            <button type="submit" class="btn btn-danger btn-sm w-100">Logout</button>
                         </form>
                     </li>
-                    <!--end::Menu Footer-->
                 </ul>
             </li>
             @else
-            <a href="{{ route('login') }}" class="btn btn-primary  ">Login</a>
+            <li class="nav-item">
+                <a href="{{ route('login') }}" class="btn btn-primary px-4 py-2">Login</a>
+            </li>
             @endif
-            <!--end::User Menu Dropdown-->
         </ul>
+
         <!--end::End Navbar Links-->
     </div>
     <!--end::Container-->
