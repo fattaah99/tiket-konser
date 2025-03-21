@@ -23,4 +23,9 @@
 
     <button type="submit" class="btn btn-primary btn-block">Login</button>
 </form>
+
+<div class="text-center mt-3">
+    <!-- <p>Belum punya akun? <a href="{{ route('admin.users.store') }}">Daftar di sini</a></p> -->
+    <p>Belum punya akun? <a href="{{ route('register') }}">Daftar di sini</a></p>
+</div>
 @endsection

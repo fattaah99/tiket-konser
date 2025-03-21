@@ -6,11 +6,13 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\EventGalleryController;
 use App\Http\Controllers\Admin\TicketsController;
+use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\MidtransController;
+use App\Models\Admin;
 
 Route::get('/tickets', [PublicController::class, 'tickets']);
 Route::get('/ticket/{id}', [PublicController::class, 'show'])->name('public.ticket-detail');
@@ -31,6 +33,10 @@ Route::get('/my-orders', [OrderController::class, 'myOrders'])->name('orders.myO
 Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 Route::get('/order/success/{id}', [OrderController::class, 'success'])->name('order.success');
 
+Route::get('/register', [UserAuthController::class, 'showRegisterForm'])->name('register');
+Route::post('/register', [UserAuthController::class, 'register'])->name('register.post');
+
+
 
 // Route::get('/midtrans/check-status/{orderId}', [MidtransController::class, 'checkPaymentStatus']);
 
@@ -39,7 +45,6 @@ Route::get('/order/success/{id}', [OrderController::class, 'success'])->name('or
 //     Route::get('/ticket/{id}', [OrderController::class, 'show']);
 //     Route::post('/order', [OrderController::class, 'store']);
 // });
-
 
 
 Route::prefix('admin')->group(function () {
@@ -74,6 +79,10 @@ Route::prefix('admin')->group(function () {
         Route::get('/tickets/{id}/edit', [TicketsController::class, 'edit'])->name('admin.tickets.edit');
         Route::put('/tickets/{id}', [TicketsController::class, 'update'])->name('admin.tickets.update');
         
+        Route::get('/orders', [AdminOrderController::class, 'index'])->name('admin.orders.index');
+        Route::post('/orders', [AdminOrderController::class, 'store'])->name('admin.orders.store');
+        Route::put('/orders/{order}', [AdminOrderController::class, 'update'])->name('admin.orders.update');
+        Route::delete('/orders/{order}', [AdminOrderController::class, 'destroy'])->name('admin.orders.destroy');
 
     });
 });
