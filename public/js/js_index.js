@@ -1,19 +1,72 @@
+// let index = 0;
+// const carouselInnerManual = document.querySelector(".carousel-inner-manual");
+
+// if (carouselInnerManual) {
+//     const manualSlides = carouselInnerManual.querySelectorAll("img");
+//     const totalManualSlides = manualSlides.length;
+
+//     function nextSlideManual() {
+//         index = (index + 1) % totalManualSlides;
+//         carouselInnerManual.style.transform = `translateX(-${index * 100}%)`;
+//     }
+
+//     setInterval(nextSlideManual, 3000);
+// } else {
+//     console.error("Element .carousel-inner-manual tidak ditemukan.");
+// }
+
 let index = 0;
 const carouselInnerManual = document.querySelector(".carousel-inner-manual");
 
 if (carouselInnerManual) {
-    const manualSlides = carouselInnerManual.querySelectorAll("img");
+    const manualSlides = carouselInnerManual.querySelectorAll(".carousel-item");
     const totalManualSlides = manualSlides.length;
 
     function nextSlideManual() {
+        // Hapus class 'active' dari semua slide
+        manualSlides.forEach((slide) => slide.classList.remove("active"));
+
+        // Update index ke slide berikutnya
         index = (index + 1) % totalManualSlides;
-        carouselInnerManual.style.transform = `translateX(-${index * 100}%)`;
+
+        // Tambahkan class 'active' ke slide baru
+        manualSlides[index].classList.add("active");
     }
 
     setInterval(nextSlideManual, 3000);
 } else {
     console.error("Element .carousel-inner-manual tidak ditemukan.");
 }
+
+// let index = 0;
+// const carouselInnerManual = document.querySelector(".carousel-inner-manual");
+
+// if (carouselInnerManual) {
+//     const manualSlides = carouselInnerManual.querySelectorAll(".carousel-item");
+//     const totalManualSlides = manualSlides.length;
+
+//     // Pastikan container cukup luas
+//     carouselInnerManual.style.display = "flex";
+//     carouselInnerManual.style.transition = "transform 0.5s ease-in-out";
+//     carouselInnerManual.style.width = `${totalManualSlides * 100}%`;
+
+//     // Set setiap slide agar ukurannya sesuai
+//     manualSlides.forEach((slide) => {
+//         slide.style.width = `${100 / totalManualSlides}%`;
+//         slide.style.flex = "0 0 auto";
+//     });
+
+//     function nextSlideManual() {
+//         index = (index + 1) % totalManualSlides;
+//         carouselInnerManual.style.transform = `translateX(-${
+//             index * (100 / totalManualSlides)
+//         }%)`;
+//     }
+
+//     setInterval(nextSlideManual, 3000);
+// } else {
+//     console.error("Element .carousel-inner-manual tidak ditemukan.");
+// }
 
 document.querySelectorAll(".gallery img").forEach((img) => {
     img.addEventListener("click", function () {

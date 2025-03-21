@@ -52,28 +52,37 @@
         </div>
         <div class="container d-flex justify-content-center">
             <div class="row px-3 flex-wrap align-items-center justify-content-center"
-                style="border-radius: 10px; background-color: #555555; max-width: 100%; width: 60%">
+                style="border-radius: 10px; background-color: #555555; max-width: 100%; width: 50%">
                 <div class="col-12 col-md-6 d-flex justify-content-center">
                     <!-- JavaScript Manual Carousel -->
                     <div class="carousel manual-carousel">
                         <div class="carousel-inner-manual">
-                            <img src="../../dist/assets/img/carousel-1.jpg" alt="Image 1" />
-                            <img src="../../dist/assets/img/carousel-2.jpg" alt="Image 2" />
-                            <img src="https://via.placeholder.com/600x300/3357FF/FFFFFF?text=Image+3" alt="Image 3" />
+                            @foreach($latestEventGallery as $key => $gallery)
+                            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                <img src="{{ asset('storage/' . $gallery->image_url) }}" class="d-block w-100"
+                                    alt="Event Image">
+                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
                 <div
-                    class="col-12 col-md-6 d-flex flex-column justify-content-center text-center text-md-start mt-4 mt-md-0">
+                    class="col-12 col-md-6 d-flex flex-column justify-content-center text-center text-md-start  mt-md-0">
                     <div>
-                        <h4>Lorem, ipsum dolor.</h4>
-                        <p class="pt-4">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Blanditiis,
-                            aut maiores earum explicabo deleniti alias nihil architecto sit aliquam ut.</p>
-                        <button class="btn btn-primary mb-4">More</button>
+                        <h4>{{ $latestTicket->event->title ?? 'Event Name' }}</h4>
+                        <p class="pt-4">{{ $latestTicket->event->description ?? 'No description available.' }}</p>
+                        @if(isset($latestTicket))
+                        @if(Auth::check())
+                        <a href="{{ route('public.ticket-detail', $latestTicket->id) }}" class="btn btn-primary">Buy</a>
+                        @else
+                        <button type="button" class="btn btn-primary" onclick="showLoginModal()">Buy</button>
+                        @endif
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 
     <div class="container-fluid event-section mb-5">

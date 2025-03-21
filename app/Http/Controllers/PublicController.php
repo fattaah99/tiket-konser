@@ -27,19 +27,6 @@ class PublicController extends Controller
 
         return view('public.all-tiket', compact('tickets', 'eventGallery', 'latestEventGallery', 'latestTicket'));
     }
-    // public function show($id)
-    // {
-    //     // Ambil tiket yang dipilih
-    //     $ticket = Ticket::with('event')->findOrFail($id);
-    
-    //     // Ambil semua kelas tiket berdasarkan event_id
-    //     $ticketClasses = Ticket::where('event_id', $ticket->event_id)
-    //     ->select('id', 'ticket_class', 'price') // Tambahkan id di sini
-    //     ->distinct()
-    //     ->get();
-    
-    //     return view('public.ticket-detail', compact('ticket', 'ticketClasses'));
-    // }
     
     public function show($id)
     {
