@@ -124,7 +124,7 @@
                     <div class="row mt-5">
                         <div class="col-3">
                             <button type="submit" class="btn btn-primary w-100"><i
-                                    class="fa-solid fa-cart-shopping"></i> Submit</button>
+                                    class="fa-solid fa-cart-shopping"></i> Buy</button>
                         </div>
                     </div>
                 </form>

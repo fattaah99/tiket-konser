@@ -17,10 +17,7 @@
         <ul class="navbar-nav ms-auto align-items-center">
             <!-- Fullscreen Toggle -->
             <li class="nav-item">
-                <a class="nav-link d-flex align-items-center" href="#" data-lte-toggle="fullscreen">
-                    <i data-lte-icon="maximize" class="bi bi-arrows-fullscreen fs-5"></i>
-                    <i data-lte-icon="minimize" class="bi bi-fullscreen-exit fs-5" style="display: none"></i>
-                </a>
+
             </li>
             <!-- User Menu Dropdown -->
             @if(Auth::check())

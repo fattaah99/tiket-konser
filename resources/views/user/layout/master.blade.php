@@ -75,14 +75,14 @@
         <!--begin::Footer-->
         <footer class="app-footer bg-dark text-white">
             <!--begin::To the end-->
-            <div class="float-end d-none d-sm-inline text-white">Anything you want</div>
+            <div class="float-end d-none d-sm-inline text-white"></div>
             <!--end::To the end-->
             <!--begin::Copyright-->
             <strong class="text-white">
-                Copyright &copy; 2014-2024&nbsp;
-                <a href="https://adminlte.io" class="text-decoration-none text-white">AdminLTE.io</a>.
+
+                <a href="https://adminlte.io" class="text-decoration-none text-white"></a>
             </strong>
-            All rights reserved.
+
             <!--end::Copyright-->
         </footer>
         <!--end::Footer-->

@@ -11,6 +11,10 @@ use App\Models\Ticket;
 
 class DashboardController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin'); // Hanya admin yang bisa mengakses
+    }
     public function index()
     {
         $totalUsers = User::count();

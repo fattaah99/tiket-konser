@@ -25,7 +25,34 @@
                         <p>{{ optional($ticket->event->event_date)->format('d F, Y') ?? 'Unknown Date' }}</p>
                         <p>{{ $ticket->ticket_class }}</p>
                         <p>Price: Rp {{ number_format($ticket->price, 0, ',', '.') }}</p>
+                        @if(isset($ticket))
+                        @if(Auth::check())
                         <a href="{{ route('public.ticket-detail', $ticket->id) }}" class="btn btn-primary">Buy</a>
+                        @else
+                        <button type="button" class="btn btn-primary" onclick="showLoginModal()">Buy</button>
+                        @endif
+                        @endif
+
+                        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-black" id="loginModalLabel">Login Required</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-black">
+                                        Anda harus login terlebih dahulu untuk membeli tiket.
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

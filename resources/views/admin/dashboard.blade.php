@@ -12,7 +12,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-end">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
                     </ol>
                 </div>
@@ -30,7 +30,7 @@
                             <h3>{{ $totalOrders }}</h3>
                             <p>Total Orders</p>
                         </div>
-                        <a href="#" class="small-box-footer">
+                        <a href="{{ route('admin.orders.index') }}" class="small-box-footer">
                             More info <i class="bi bi-link-45deg"></i>
                         </a>
                     </div>
@@ -43,7 +43,7 @@
                             <h3>{{ $totalEvents }}</h3>
                             <p>Total Events</p>
                         </div>
-                        <a href="#" class="small-box-footer">
+                        <a href="{{ route('admin.events.index') }}" class="small-box-footer">
                             More info <i class="bi bi-link-45deg"></i>
                         </a>
                     </div>
@@ -56,7 +56,7 @@
                             <h3>{{ $totalUsers }}</h3>
                             <p>User Registrations</p>
                         </div>
-                        <a href="#" class="small-box-footer">
+                        <a href="{{ route('admin.users.index') }}" class="small-box-footer">
                             More info <i class="bi bi-link-45deg"></i>
                         </a>
                     </div>
@@ -69,7 +69,7 @@
                             <h3>{{ $totalTickets }}</h3>
                             <p>Total Tickets</p>
                         </div>
-                        <a href="#" class="small-box-footer">
+                        <a href="{{ route('admin.tickets.index') }}" class="small-box-footer">
                             More info <i class="bi bi-link-45deg"></i>
                         </a>
                     </div>
