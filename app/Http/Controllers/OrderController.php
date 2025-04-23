@@ -18,66 +18,61 @@ class OrderController extends Controller
     // }
 
     public function store(Request $request)
-{
-    // Validasi input
-   
-    $request->validate([
-      
-        'ticket_id' => 'required|integer',
-        'ticket_class' => 'required|in:Reguler,VIP',
-        'buyer_name' => 'required|string|max:255',
-        'email' => 'required|email|max:255',
-        'quantity' => 'required|string',
-        'total_price' => 'required|string',
-        
-    ]);
-
-    // Buat order baru
-    $order=Order::create([
-      
-        'ticket_id' => $request->ticket_id,
-        'ticket_class' => $request->ticket_class,
-        'buyer_name' => $request->buyer_name,
-        'email' => $request->email,
-        'quantity' => $request->quantity,
-        'total_price' => $request->total_price,
-        'status' =>'pending'
-    ]);
-
-    // Set your Merchant Server Key
-    \Midtrans\Config::$serverKey = config('midtrans.serverKey');
-    // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
-    \Midtrans\Config::$isProduction = false;
-    // Set sanitization on (default)
-    \Midtrans\Config::$isSanitized = true;
-    // Set 3DS transaction for credit card to true
-    \Midtrans\Config::$is3ds = true;
-
-    $transaction_details = [
-        'order_id' => $order->id,
-        'gross_amount' => $order->total_price,
-    ];
-
-    $customer_details = [
-        'first_name' => $order->buyer_name,
-        'email' => $order->email,
-    ];
-
-    $params = [
-        'transaction_details' => $transaction_details,
-        'customer_details' => $customer_details
-    ];
-
-    $snapToken = \Midtrans\Snap::getSnapToken($params);
-    $order ->snap_token = $snapToken;
-
-    $order -> save();
-
-
-    return view('order.payment', compact('snapToken', 'order'));
-
-}
-
+    {
+        $request->validate([
+            'ticket_id' => 'required|integer',
+            'ticket_class' => 'required|in:Reguler,VIP',
+            'buyer_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'quantity' => 'required|string',
+            'total_price' => 'required|string',
+        ]);
+    
+        // Buat order baru
+        $order = Order::create([
+            'ticket_id' => $request->ticket_id,
+            'ticket_class' => $request->ticket_class,
+            'buyer_name' => $request->buyer_name,
+            'email' => $request->email,
+            'quantity' => $request->quantity,
+            'total_price' => $request->total_price,
+            'status' => 'pending'
+        ]);
+    
+        // Konfigurasi Midtrans
+        \Midtrans\Config::$serverKey = config('midtrans.serverKey');
+        \Midtrans\Config::$isProduction = false;
+        \Midtrans\Config::$isSanitized = true;
+        \Midtrans\Config::$is3ds = true;
+    
+        // Buat order_id unik untuk Midtrans
+        $midtrans_order_id = 'ORDER-' . $order->id . '-' . uniqid();
+    
+        $transaction_details = [
+            'order_id' => $midtrans_order_id,
+            'gross_amount' => $order->total_price,
+        ];
+    
+        $customer_details = [
+            'first_name' => $order->buyer_name,
+            'email' => $order->email,
+        ];
+    
+        $params = [
+            'transaction_details' => $transaction_details,
+            'customer_details' => $customer_details
+        ];
+    
+        // Ambil Snap Token dari Midtrans
+        $snapToken = \Midtrans\Snap::getSnapToken($params);
+        $order->snap_token = $snapToken;
+    
+        // Simpan Snap Token (dan opsional: simpan midtrans_order_id juga kalau mau dilacak)
+        $order->save();
+    
+        return view('order.payment', compact('snapToken', 'order'));
+    }
+    
 
 public function success($id)
 {
