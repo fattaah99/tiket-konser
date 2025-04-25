@@ -136,6 +136,27 @@ public function show($id)
     
         return view('order.index', compact('orders'));
     }
+
+    public function continue($id)
+{
+    $order = Order::findOrFail($id);
+
+    // // Pastikan order masih berstatus pending
+    // if ($order->status !== 'Pending') {
+    //     return redirect()->route('home')->with('error', 'Transaksi sudah diproses atau tidak bisa dilanjutkan.');
+    // }
+
+    // Pastikan snap_token tersedia
+    if (!$order->snap_token) {
+        return redirect()->route('home')->with('error', 'Token pembayaran tidak tersedia.');
+    }
+
+    return view('order.payment', [
+        'snapToken' => $order->snap_token,
+        'order' => $order
+    ]);
+}
+
     
 
 

@@ -29,6 +29,8 @@ Route::post('/logout', [UserAuthController::class, 'logout'])->name('logout');
 Route::get('/ticket/print/{id}', [TicketController::class, 'printTicket'])->name('ticket.print');
 
 Route::get('/my-orders', [OrderController::class, 'myOrders'])->name('orders.myOrders')->middleware('auth');
+Route::get('/order/continue/{id}', [OrderController::class, 'continue'])->name('orders.continue')->middleware('auth');
+
 
 Route::post('/order', [OrderController::class, 'store'])->name('order.store');
 Route::get('/order/success/{id}', [OrderController::class, 'success'])->name('order.success');

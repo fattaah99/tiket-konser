@@ -46,10 +46,17 @@
                                         </td>
 
                                         <td>
+                                            @if($order->status == 'Paid')
                                             <a href="{{ route('ticket.print', $order->id) }}"
                                                 class="btn btn-primary btn-sm" target="_blank">
                                                 Print
                                             </a>
+                                            @elseif($order->status == 'Pending')
+                                            <a href="{{ route('orders.continue', $order->id) }}"
+                                                class="btn btn-success btn-sm">
+                                                Lanjutkan Transaksi
+                                            </a>
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach
