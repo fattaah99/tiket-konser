@@ -22,11 +22,26 @@ class OrderController extends Controller
         $request->validate([
             'ticket_id' => 'required|integer',
             'ticket_class' => 'required|in:Reguler,VIP',
-            'user_id' => 'required|integer', // ganti dari 'id' ke 'user_id'
+            'user_id' => 'required|integer',
             'email' => 'required|email|max:255',
             'quantity' => 'required|string',
             'total_price' => 'required|string',
         ]);
+    
+        // Ambil ticket untuk mengetahui event_id
+        $ticket = Ticket::findOrFail($request->ticket_id);
+    
+        // Hitung jumlah order untuk event ini yang status-nya selain pending
+        $completedOrdersCount = Order::whereHas('ticket', function ($query) use ($ticket) {
+            $query->where('event_id', $ticket->event_id);
+        })
+        ->where('user_id', $request->user_id)
+        ->where('status', '!=', 'pending') // hanya hitung yang bukan pending
+        ->count();
+    
+        if ($completedOrdersCount >= 3) {
+            return redirect()->back()->with('error', 'Anda sudah mencapai batas maksimal 3 order yang telah dibayar untuk event ini.');
+        }
     
         // Buat order baru
         $order = Order::create([
@@ -39,16 +54,13 @@ class OrderController extends Controller
             'status' => 'pending'
         ]);
     
-        // Pastikan relasi user termuat
         $order->load('user');
     
-        // Konfigurasi Midtrans
         \Midtrans\Config::$serverKey = config('midtrans.serverKey');
         \Midtrans\Config::$isProduction = false;
         \Midtrans\Config::$isSanitized = true;
         \Midtrans\Config::$is3ds = true;
     
-        // Buat order_id unik untuk Midtrans
         $midtrans_order_id = 'ORDER-' . $order->id . '-' . uniqid();
     
         $transaction_details = [
@@ -57,7 +69,7 @@ class OrderController extends Controller
         ];
     
         $customer_details = [
-            'first_name' => $order->user->name ?? 'Customer', // fallback jika user tidak ditemukan
+            'first_name' => $order->user->name ?? 'Customer',
             'email' => $order->email,
         ];
     
@@ -66,15 +78,14 @@ class OrderController extends Controller
             'customer_details' => $customer_details
         ];
     
-        // Ambil Snap Token dari Midtrans
         $snapToken = \Midtrans\Snap::getSnapToken($params);
         $order->snap_token = $snapToken;
-    
-        // Simpan Snap Token
         $order->save();
     
         return view('order.payment', compact('snapToken', 'order'));
     }
+    
+    
     
     
 
