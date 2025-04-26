@@ -25,7 +25,7 @@
                     </div>
                     <div class="card-body">
                         <h5 class="text-center">Order ID: <strong>{{ $order->id }}</strong></h5>
-                        <p class="text-center">Nama: <strong>{{ $order->buyer_name }}</strong></p>
+                        <p class="text-center">Nama: <strong>{{ $order->user->name ?? 'Tidak Diketahui' }}</strong></p>
                         <p class="text-center">Email: <strong>{{ $order->email }}</strong></p>
                         <p class="text-center">Total Harga:
                             <strong>Rp{{ number_format($order->total_price, 0, ',', '.') }}</strong>

@@ -95,8 +95,7 @@
                     <input type="hidden" name="ticket_class" id="hiddenTicketClass" value="">
 
                     <!-- Informasi Pembeli -->
-                    <input type="hidden" name="buyer_name" class="form-control" value="{{ Auth::user()->name }}"
-                        readonly>
+                    <input type="hidden" name="user_id" class="form-control" value="{{ Auth::user()->id }}" readonly>
                     <!-- <p class="text-white">Selected Ticket ID: <span id="ticketIdDisplay">-</span></p> -->
                     <input type="hidden" name="email" class="form-control" value="{{ Auth::user()->email }}" readonly>
 

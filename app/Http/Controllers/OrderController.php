@@ -22,7 +22,7 @@ class OrderController extends Controller
         $request->validate([
             'ticket_id' => 'required|integer',
             'ticket_class' => 'required|in:Reguler,VIP',
-            'buyer_name' => 'required|string|max:255',
+            'user_id' => 'required|integer', // ganti dari 'id' ke 'user_id'
             'email' => 'required|email|max:255',
             'quantity' => 'required|string',
             'total_price' => 'required|string',
@@ -32,12 +32,15 @@ class OrderController extends Controller
         $order = Order::create([
             'ticket_id' => $request->ticket_id,
             'ticket_class' => $request->ticket_class,
-            'buyer_name' => $request->buyer_name,
+            'user_id' => $request->user_id,
             'email' => $request->email,
             'quantity' => $request->quantity,
             'total_price' => $request->total_price,
             'status' => 'pending'
         ]);
+    
+        // Pastikan relasi user termuat
+        $order->load('user');
     
         // Konfigurasi Midtrans
         \Midtrans\Config::$serverKey = config('midtrans.serverKey');
@@ -54,7 +57,7 @@ class OrderController extends Controller
         ];
     
         $customer_details = [
-            'first_name' => $order->buyer_name,
+            'first_name' => $order->user->name ?? 'Customer', // fallback jika user tidak ditemukan
             'email' => $order->email,
         ];
     
@@ -67,11 +70,12 @@ class OrderController extends Controller
         $snapToken = \Midtrans\Snap::getSnapToken($params);
         $order->snap_token = $snapToken;
     
-        // Simpan Snap Token (dan opsional: simpan midtrans_order_id juga kalau mau dilacak)
+        // Simpan Snap Token
         $order->save();
     
         return view('order.payment', compact('snapToken', 'order'));
     }
+    
     
 
 public function success($id)

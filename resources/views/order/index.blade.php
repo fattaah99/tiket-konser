@@ -30,7 +30,7 @@
                                     <tr>
 
                                         <td>{{ $index + 1 }}</td>
-                                        <td>{{ $order->buyer_name }}</td>
+                                        <td>{{ $order->user->name ?? 'Tidak Diketahui' }}</td>
                                         <td>{{ $order->email }}</td>
                                         <td>{{ $order->ticket->event->title ?? 'No Event' }}</td>
                                         <td>{{ $order->quantity }}</td>

@@ -17,6 +17,7 @@ class Order extends Model
         'quantity',
         'total_price',
         'status',
+        'user_id', 
     ];
 
     /**
@@ -24,12 +25,23 @@ class Order extends Model
      */
     public function ticket()
     {
-        return $this->belongsTo(Ticket::class, 'ticket_id'); // Pastikan foreign key benar
+        return $this->belongsTo(Ticket::class, 'ticket_id');
     }
+
+    /**
+     * Relasi ke model User (Many orders belong to one user).
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * Ini sepertinya tidak diperlukan karena Order tidak punya child Order.
+     * Bisa dihapus jika tidak digunakan.
+     */
     public function orders()
     {
         return $this->hasMany(Order::class);
     }
-
-    
 }
